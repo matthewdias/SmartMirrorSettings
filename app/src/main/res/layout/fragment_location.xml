@@ -1,13 +1,51 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusedByDefault="false"
+    android:overScrollMode="never"
     tools:context="me.matthewdias.smartmirrorsettings.LocationFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="loc" />
+    <Button
+        android:id="@+id/zipcodeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/zipcodeEdit"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="83dp"
+        android:text="Submit" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/zipcodeEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:hint="zip code"
+        android:inputType="number"
+        android:focusedByDefault="false"
+        android:selectAllOnFocus="true"
+        android:maxLines="1" />
+
+    <TextView
+        android:id="@+id/cityText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="61dp"
+        android:text="city"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/timezoneText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cityText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:text="timezone"
+        android:visibility="invisible" />
+
+</RelativeLayout>

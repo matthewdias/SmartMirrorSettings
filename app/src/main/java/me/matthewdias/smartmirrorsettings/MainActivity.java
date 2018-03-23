@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     private ViewPager viewPager;
+    public MirrorAPIAdapter mirrorAPIAdapter;
 
     LocationFragment locationFragment;
     CalendarFragment calendarFragment;
@@ -71,6 +72,14 @@ public class MainActivity extends AppCompatActivity {
         calendarFragment = new CalendarFragment();
         adapter.addFragment(calendarFragment);
         viewPager.setAdapter(adapter);
+
+        mirrorAPIAdapter = new MirrorAPIAdapter(getString(R.string.mirror_host), this);
     }
 
+    public MirrorAPIAdapter getMirrorAPIAdapter() {
+        if (mirrorAPIAdapter == null) {
+            mirrorAPIAdapter = new MirrorAPIAdapter(getString(R.string.mirror_host), this);
+        }
+        return mirrorAPIAdapter;
+    }
 }
