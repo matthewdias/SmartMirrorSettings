@@ -49,7 +49,7 @@ public class MirrorAPIAdapter {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        onResponse(response);
+                        onSuccess(response);
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -62,7 +62,7 @@ public class MirrorAPIAdapter {
         queue.add(request);
     }
 
-    public void onResponse(String response) {
+    public void onSuccess(String response) {
         Log.d("Response", response);
         String setting = "a";
         SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.preference_title_key), Context.MODE_PRIVATE);

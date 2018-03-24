@@ -4,5 +4,5 @@
     <string name="title_calendar">Calendar Settings</string>
 
     <string name="preference_title_key">me.matthewdias.smartmirrorsettings.PREFS</string>
-    <string name="mirror_host">http://192.168.1.17</string>
+    <string name="mirror_host">http://192.168.1.17:8090</string>
 </resources>
