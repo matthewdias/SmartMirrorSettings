@@ -11,6 +11,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONObject;
+
 import static com.android.volley.Request.Method.GET;
 import static com.android.volley.Request.Method.POST;
 
@@ -24,6 +26,10 @@ public class MirrorAPIAdapter {
         this.host = host;
         this.context = context;
         queue = Volley.newRequestQueue(context);
+    }
+
+    public void setHost(String host) {
+        this.host = host;
     }
 
     public void getSetting(String setting) {
@@ -44,12 +50,13 @@ public class MirrorAPIAdapter {
         queue.add(request);
     }
 
-    public void changeSetting(String setting, String value) {
-        StringRequest request = new StringRequest(POST, host + "/settings/" + setting + "?value=" + value,
+    public void changeSetting(final String setting, String value) {
+        String url = host + "/settings/" + setting + "?value=" + value;
+        StringRequest request = new StringRequest(POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        onSuccess(response);
+                        onSuccess(setting, response);
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -62,11 +69,25 @@ public class MirrorAPIAdapter {
         queue.add(request);
     }
 
-    public void onSuccess(String response) {
+    private void onSuccess(String setting, String response) {
         Log.d("Response", response);
-        String setting = "a";
-        SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.preference_title_key), Context.MODE_PRIVATE);
-        prefs.edit().putString(setting, response).commit();
+        SharedPreferences.Editor prefs = context.getSharedPreferences(context.getString(R.string.preference_title_key), Context.MODE_PRIVATE).edit();
+        JSONObject reader;
+        try {
+            reader = new JSONObject(response);
+            if (setting.equals("zipcode")) {
+                String locality = reader.getString("locality");
+                prefs.putString("locality", locality);
+                String timeZoneName = reader.getString("timeZoneName");
+                prefs.putString("timeZoneName", timeZoneName);
+                ((MainActivity)context).updateLocation(locality, timeZoneName);
+            } else {
+                prefs.putString(setting, response);
+            }
+            prefs.commit();
+        } catch (Exception e) {
+            Log.d("json", e.toString());
+        }
     }
 
     private void onError(VolleyError error) {

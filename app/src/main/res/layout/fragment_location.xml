@@ -29,23 +29,20 @@
         android:maxLines="1" />
 
     <TextView
-        android:id="@+id/cityText"
+        android:id="@+id/timezoneText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="61dp"
-        android:text="city"
-        android:visibility="invisible" />
+        android:layout_marginTop="59dp"
+        android:visibility="visible" />
 
     <TextView
-        android:id="@+id/timezoneText"
+        android:id="@+id/localityText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/cityText"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="17dp"
-        android:text="timezone"
-        android:visibility="invisible" />
+        android:layout_marginTop="104dp" />
 
 </RelativeLayout>

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 public class LocationFragment extends Fragment {
     private String city;
@@ -24,20 +23,18 @@ public class LocationFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 EditText zipEdit = getView().findViewById(R.id.zipcodeEdit);
-                MirrorAPIAdapter adapter = ((MainActivity)getActivity()).getMirrorAPIAdapter();
-                adapter.changeSetting("zipcode", zipEdit.getText().toString());
+                LocationController.submitLocation(zipEdit.getText().toString(), (MainActivity) getActivity());
             }
         });
 
         SharedPreferences prefs = getActivity().getSharedPreferences(getActivity().getString(R.string.preference_title_key), Context.MODE_PRIVATE);
-        city = prefs.getString("city", "");
-        timezone = prefs.getString("timezone", "");
+        city = prefs.getString("locality", "");
+        timezone = prefs.getString("timeZoneName", "");
 
         if (!city.equals("")) {
-            updateLocation();
+            ((MainActivity)getActivity()).updateLocation(city, timezone);
         } else {
-            MirrorAPIAdapter adapter = ((MainActivity)getActivity()).getMirrorAPIAdapter();
-            adapter.getSetting("zipcode");
+            LocationController.getLocation((MainActivity)getActivity());
         }
     }
 
@@ -46,14 +43,5 @@ public class LocationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_location, container, false);
-    }
-
-    public void updateLocation() {
-        TextView cityText = getView().findViewById(R.id.cityText);
-        TextView tzText = getView().findViewById(R.id.timezoneText);
-        cityText.setText(city);
-        tzText.setText(timezone);
-        cityText.setVisibility(View.VISIBLE);
-        tzText.setVisibility(View.VISIBLE);
     }
 }
